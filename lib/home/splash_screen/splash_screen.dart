@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         gifWidth: 269,
         gifHeight: 474,
         nextScreen: const HomePage(),
-        duration: const Duration(milliseconds: 3515),
+        duration: const Duration(milliseconds: 5515),
         onInit: () async {
           debugPrint("onInit");
         },
