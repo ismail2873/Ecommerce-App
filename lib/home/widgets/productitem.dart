@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 class ProductItem extends StatelessWidget {
+  final AssetImage image;
+  final String name;
+  final String price;
   const ProductItem({
     super.key,
+    required this.image,required this.name,required this.price
   });
 
   @override
@@ -14,16 +18,16 @@ class ProductItem extends StatelessWidget {
             child:
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Image(image: AssetImage('assets/images/ecomerce.jpg'),
+              child: Image(image: image,
               fit: BoxFit.cover,),
             ),
         
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Text('Smart Watch'),
+        child: Text(name),
       ),
-    Text('\$200.0'),
+    Text(price),
       ]
       
     );

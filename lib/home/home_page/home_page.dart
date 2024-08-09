@@ -1,10 +1,12 @@
 import 'package:another_flutter_splash_screen/splashs/fade_In_splash.dart';
+import 'package:app1/home/product/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:app1/home/widgets/productitem.dart';
 import 'package:app1/home/widgets/category_item.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:app1/home/product/product_details.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -95,14 +97,47 @@ class HomePage extends StatelessWidget {
               StaggeredGrid.count(
                 crossAxisCount: 2,
                 children: [
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem()),
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem()),
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem()),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductDetails()));
+                    },
+                    child: StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
+                    image: AssetImage('assets/images/ecomerce.jpg'),
+                    name: 'Smart Watch',
+                    price: '\$200.0',
+                  ))),
+                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
+                    image: AssetImage('assets/images/macbook.jfif'),
+                    name: 'Apple Macbook',
+                    price: '\$100.0',
+                  )),
+                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
+                    image: AssetImage('assets/images/download.jfif'),
+                    name: 'Phone',
+                    price: '\$150.0',
+                  )),
+                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
+                    image: AssetImage('assets/images/ecomerce.jpg'),
+                    name: 'Ear buds',
+                    price: '\$300.0',
+                  )),
+
 
                 ],
                 )
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+         
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 0,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.heart_broken), label: 'Wishlist'),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Cart'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+          ],
         ),
       ),
     );
