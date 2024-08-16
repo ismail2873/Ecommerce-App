@@ -1,3 +1,4 @@
+import 'package:app1/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:app1/home/home_page/home_page.dart';
@@ -14,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         gifPath: 'assets/gifs/splash.gif',
         gifWidth: 269,
         gifHeight: 474,
-        nextScreen: const HomePage(),
+        nextScreen: BottomNav(),
         duration: const Duration(milliseconds: 5515),
         onInit: () async {
           debugPrint("onInit");

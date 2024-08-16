@@ -1,4 +1,5 @@
 import 'package:another_flutter_splash_screen/splashs/fade_In_splash.dart';
+import 'package:app1/home/controllers/product_controller.dart';
 import 'package:app1/home/product/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,9 +8,12 @@ import 'package:app1/home/widgets/productitem.dart';
 import 'package:app1/home/widgets/category_item.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:app1/home/product/product_details.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+   HomePage({super.key});
+
+  final ProductController controller = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,22 +72,29 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.amber,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    CategoryItem(
-                      icon: Icon(Icons.psychology),
-                      name: 'Product 1',
+                    
+                    controller.catLoading.value? CircularProgressIndicator(): Expanded(
+                      child: SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            
+                            itemCount: controller.categoryList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context,index)=> CategoryItem(category: controller.categoryList[index]),
+                            ),
+                      ),
                     ),
-                    CategoryItem(
-                      icon: Icon(Icons.dangerous),
-                      name: 'Product 2',
-                    ),
+                    
                   ],
                 ),
               ),
@@ -94,51 +105,21 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               ),
-              StaggeredGrid.count(
-                crossAxisCount: 2,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductDetails()));
-                    },
-                    child: StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
-                    image: AssetImage('assets/images/ecomerce.jpg'),
-                    name: 'Smart Watch',
-                    price: '\$200.0',
-                  ))),
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
-                    image: AssetImage('assets/images/macbook.jfif'),
-                    name: 'Apple Macbook',
-                    price: '\$100.0',
-                  )),
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
-                    image: AssetImage('assets/images/download.jfif'),
-                    name: 'Phone',
-                    price: '\$150.0',
-                  )),
-                  StaggeredGridTile.count(crossAxisCellCount: 1, mainAxisCellCount: 1, child: ProductItem(
-                    image: AssetImage('assets/images/ecomerce.jpg'),
-                    name: 'Ear buds',
-                    price: '\$300.0',
-                  )),
-
-
-                ],
+              Obx(
+                ()=>controller.loading.value ? CircularProgressIndicator(): StaggeredGridView.countBuilder(
+                  itemCount: controller.productList.length,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                crossAxisCount: 4,
+                itemBuilder: (_, index) => ProductItem(product: controller.productList[index]),
+                staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                
                 )
+              )
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-         
-          type: BottomNavigationBarType.fixed,
-          currentIndex: 0,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.heart_broken), label: 'Wishlist'),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Cart'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-          ],
-        ),
+      
       ),
     );
   }

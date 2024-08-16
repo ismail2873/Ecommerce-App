@@ -1,8 +1,10 @@
+import 'package:app1/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  final ProductElement product;
+  const ProductDetails({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -11,27 +13,27 @@ class ProductDetails extends StatelessWidget {
 
       body: Column(
         children: [
-          Image(image: AssetImage('assets/images/ecomerce.jpg'), width: MediaQuery.of(context).size.width - 20,),
-          const Padding(
+          Image(image:NetworkImage(product.thumbnail), width: MediaQuery.of(context).size.width - 20,),
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Smart Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                Text('\$20.0', textAlign: TextAlign.end,style: TextStyle(color:Colors.red,fontWeight: FontWeight.bold),),
+                SizedBox(width: MediaQuery.of(context).size.width-100, child: Text(product.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,), softWrap: true, overflow: TextOverflow.ellipsis,)),
+                Text(product.price.toString(), textAlign: TextAlign.end,style: TextStyle(color:Colors.red,fontWeight: FontWeight.bold),),
                
               ],
             ),
             
           ),
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                
                 Text('*****',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color:Colors.amber),),
-                Text('Available in stock',style: TextStyle(fontWeight: FontWeight.bold, color:Colors.green,)),
+                Text(product.stock.toString(),style: TextStyle(fontWeight: FontWeight.bold, color:Colors.green,)),
               ],
             ),
             
@@ -93,14 +95,14 @@ class ProductDetails extends StatelessWidget {
               ) ,
             ),
           ),
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                
                 Text('Brand:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),),
-                Text('android',style: TextStyle(fontWeight: FontWeight.bold, color:Color.fromARGB(255, 128, 131, 128),)),
+                Text(product.brand.toString(),style: TextStyle(fontWeight: FontWeight.bold, color:Color.fromARGB(255, 128, 131, 128),)),
               ],
             ),
             
@@ -146,7 +148,7 @@ class ProductDetails extends StatelessWidget {
             height: 40,
             child: Container(
               decoration: BoxDecoration(color: Color.fromARGB(255, 212, 6, 6)),
-              child: Center(child: Text('button',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
+              child: Center(child: Text('Add to cart',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
             ),
           )
         ],
